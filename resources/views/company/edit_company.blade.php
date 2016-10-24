@@ -15,7 +15,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0Bu6drHLCQKrrkyMGjPrUweA0NsPZFto&libraries=places" type="text/javascript"></script>   
 
-{!! Form::model($company->companycontacts, ['route' => ['company.update', $company->id]])  !!}
+{!! Form::model($companycontact, ['route' => ['company.update', $company->id]])  !!}
 	
 	{{ Form::label('company_name', 'Name of Your Business:') }}
 	{{ Form::text('company_name', null, ["class" => 'form-control input-lg']) }}

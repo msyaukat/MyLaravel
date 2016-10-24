@@ -158,11 +158,15 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        $company = Company::find($id);  
+        
+        //$company = Company::find($id);
+        //$companycontacts = CompanyContact::where('company_id', $id)->get();
+        //$company = $company->merge($companycontacts);
+        //$company = Company::find($id);  
+        $companycontacts = companycontact::with('company')->get();
+        //$companycontacts = Company::find($id)->companycontacts;        
 
-        $companycontacts = Company::find($id)->companycontacts;
-
-        //$companycontacts = $company->companycontacts;  
+        //  $companycontacts = $company->companycontacts;  
 
         //$companycontacts = Company::find($id)->companycontacts;
 
@@ -172,10 +176,15 @@ class CompanyController extends Controller
 
         //$company = CompanyContact::with('company')->find($id);
 
-            //foreach ($companycontacts as $companycontact);
+            foreach ($companycontacts as $companycontact);
         //$company = CompanyContact::with(company);
+            //$company = Company::with('companycontact')->get();
 
-            return view('company.edit_company', compact('company'))->with('company', $company)->with('companycontacts', $companycontacts);
+        //$company->companycontacts()->associate($companycontact);
+
+            return view('company/edit_company');//->with('CompanyContact', $companycontact);//->with('companycontact', $companycontact);
+
+            //return view('company/edit_company', compact('company'));
     }
 
     /**
