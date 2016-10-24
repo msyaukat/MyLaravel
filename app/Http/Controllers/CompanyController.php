@@ -147,6 +147,7 @@ class CompanyController extends Controller
         $companycontacts = Company::find($id)->companycontacts;
             foreach ($companycontacts as $companycontact);
 
+
         return view('company/profile_company')->with('company', $company)->with('companycontact', $companycontact);
     }
 
@@ -159,32 +160,38 @@ class CompanyController extends Controller
     public function edit($id)
     {
         
-        //$company = Company::find($id);
+        $company = Company::find($id);
         //$companycontacts = CompanyContact::where('company_id', $id)->get();
         //$company = $company->merge($companycontacts);
         //$company = Company::find($id);  
-        $companycontacts = companycontact::with('company')->get();
-        //$companycontacts = Company::find($id)->companycontacts;        
+        //$companycontacts = companycontact::with('company')->get();
+        //$companycontacts = Company::find($id)->companycontacts;     
+        //$company->load('companycontacts'); // this works
+        $company = Company::with('companycontacts')->where('company_id', $id)->first();
+        //DD($company);   
 
         //  $companycontacts = $company->companycontacts;  
 
         //$companycontacts = Company::find($id)->companycontacts;
 
-        //  $company->companycontacts();
+        //$company->companycontacts();
 
         //$companycontacts = $company->companycontacts;
 
-        //$company = CompanyContact::with('company')->find($id);
-
-            foreach ($companycontacts as $companycontact);
+        //$company = Company::with('companycontact')->where('company_id', $id);
+            //foreach ($companycontacts as $companycontact);
+            //dd($company);
+            
         //$company = CompanyContact::with(company);
             //$company = Company::with('companycontact')->get();
 
         //$company->companycontacts()->associate($companycontact);
 
-            return view('company/edit_company');//->with('CompanyContact', $companycontact);//->with('companycontact', $companycontact);
+            //return $company->load('companycontacts'); // works for display..
 
-            //return view('company/edit_company', compact('company'));
+           // return view('company/edit_company')->with('company', $company)->with('companycontacts');//, $companycontact);
+
+            return view('company/edit_company', compact('company'));
     }
 
     /**
