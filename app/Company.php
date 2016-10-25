@@ -21,7 +21,7 @@ class Company extends Model
 
         public function companycontacts()
         {
-                return $this->hasMany('App\CompanyContact', 'company_id', 'company_id');
+                return $this->hasOne('App\CompanyContact', 'company_id', 'company_id');
         }
 
 
