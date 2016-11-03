@@ -18,20 +18,38 @@
 
 
 <h1> {{ $company->company_name }} </h1>
+<img src="{{ asset('images/' . $company->company_image) }}" alt="HTML5 Icon" style="width:128px;height:128px;">
 <h5> {{ $company->company_description }} </h5>
 
 <h3> Company Address </h3>
-<br>
-<h5> {{ $companycontact->company_address }} </h5>
+<h5> {{ $company->companycontacts->company_address }} </h5>
 
 <label for="">Map</label>
 
                     
 <div id="map-canvas"></div>
+
+<h3> Company Phone </h3>
+<h5> {{ $company->companycontacts->company_phone }} </h5>
+
+<br>
+<h3> Company Fax </h3>
+<h5> {{ $company->companycontacts->company_fax }} </h5>
+
+<br>
+<h3> Company Email </h3>
+<h5> {{ $company->companycontacts->company_email }} </h5>
+
+<br>
+<h3> Company Website </h3>
+<h5> {{ $company->companycontacts->company_website }} </h5>
 </div>
 
   
 </div>
+
+
+
 
 
 
@@ -44,15 +62,15 @@
 
 var map = new google.maps.Map(document.getElementById('map-canvas'),{
     center:{
-      lat: {{ $companycontact->company_lat }},
-          lng: {{ $companycontact->company_lng }}
+      lat: {{ $company->companycontacts->company_lat }},
+          lng: {{ $company->companycontacts->company_lng }}
     },
     zoom:15
   });
   var marker = new google.maps.Marker({
     position: {
-      lat: {{ $companycontact->company_lat }},
-          lng: {{ $companycontact->company_lng }}
+      lat: {{ $company->companycontacts->company_lat }},
+          lng: {{ $company->companycontacts->company_lng }}
     },
     map: map,
     draggable: true

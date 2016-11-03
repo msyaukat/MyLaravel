@@ -24,5 +24,10 @@ class Company extends Model
                 return $this->hasOne('App\CompanyContact', 'company_id', 'company_id');
         }
 
+        public function companybranches()
+        {
+                return $this->hasMany('App\CompanyBranch', 'company_branch_id', 'company_id');
+        }
+
 
 }

@@ -87,25 +87,30 @@ use App\SubCategory;
                         </select>
 
                     <?php $list = array('' => 'Please select' );?>
+
+
+                    {{ Form::label('company_phone', 'Company\'s Phone Number:') }}
+                    {{ Form::text('company_phone', null, ["class" => 'form-control input-lg']) }}
+
+                    {{ Form::label('company_fax', 'Company\'s Fax:') }}
+                    {{ Form::text('company_fax', null, ["class" => 'form-control input-lg']) }}
+
+                    {{ Form::label('company_email', 'Company\'s Email:') }}
+                    {{ Form::text('company_email', null, ["class" => 'form-control input-lg']) }}
+
+                    {{ Form::label('company_website', 'Company\'s Website:') }}
+                    {{ Form::text('company_website', null, ["class" => 'form-control input-lg']) }}
                        
                     {{ Form::label('subcategory', 'Sub Categories:') }}
                         {{ Form::select('subcategory',$list, null, array('class' => 'form-control','id'=>'subcategory'))}} 
                     
-                    {{ Form::label('company_image', 'Company Image:') }}
+                    {{ Form::label('company_image', 'Company Logo:') }} 
                     {{ Form::file('company_image') }}
 
                     <br>
 
-                    {{ Form::label ('company_branch', 'Add Branches/Agents/Associates:')}}
 
-                    {{Form::label ('company_branch_name', 'Name:')}}
-                    {{ Form::text('company_branch_name', null, ["class" => 'form-control input-lg']) }}
-
-                    {{ Form::label ('company_branch_address', 'Branch/Agent/Associate Address:') }}
-                    <br>
-                    {{ Form::textarea('company_branch_address', null, ['size' => '35x8']) }}
-
-                    
+                                      
                     {{ Form::submit('Create Business', ['class' => 'btn btn-success btn-block']) }}
                 
                     {!! Form::close() !!} 

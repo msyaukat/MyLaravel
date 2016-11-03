@@ -20,6 +20,8 @@ use App\CompanyBranch;
 
 use Image;
 
+use Storage;
+
 class CompanyController extends Controller
 {
 
@@ -96,6 +98,7 @@ class CompanyController extends Controller
         }
 
         $company->save(); 
+        
         $main_cat_id= $company->company_id;
 
         //kena attach
@@ -113,23 +116,19 @@ class CompanyController extends Controller
             $subcat->save(); 
         }
 
-        //company contact
+        //company contact (phone number problem)
 
         $contact = new CompanyContact;
         $contact->company_id = $company->company_id;
         $contact->company_address = $request->company_address;
         $contact->company_lat = $request->lat;
         $contact->company_lng = $request->lng;
+        $contact->company_phone = $request->company_phone;
+        $contact->company_email = $request->company_email;
+        $contact->company_fax = $request->company_fax;
+        $contact->company_website = $request->company_website;
 
-        $contact->save();
-
-        //company branch
-        $companybranch = new CompanyBranch;
-        $companybranch->company_id =$company->company_id;
-        $companybranch->company_branch_name =$request->company_branch_name;
-        $companybranch->company_branch_address = $request->company_branch_address;
-
-        $companybranch->save();        
+        $contact->save();       
 
         
 
@@ -144,11 +143,10 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = Company::find($id);
-        $companycontacts = Company::find($id)->companycontacts;
-            foreach ($companycontacts as $companycontact);
+        $company = Company::with('companycontacts')->where('company_id', $id)->first();
 
 
-        return view('company/profile_company')->with('company', $company)->with('companycontact', $companycontact);
+        return view('company/profile_company')->with('company', $company)->with('companycontacts');
     }
 
     /**
@@ -161,37 +159,27 @@ class CompanyController extends Controller
     {
         
         $company = Company::find($id);
-        //$companycontacts = CompanyContact::where('company_id', $id)->get();
-        //$company = $company->merge($companycontacts);
-        //$company = Company::find($id);  
-        //$companycontacts = companycontact::with('company')->get();
-        //$companycontacts = Company::find($id)->companycontacts;     
+             
         //$company->load('companycontacts'); // this works
         $company = Company::with('companycontacts')->where('company_id', $id)->first();
+
+
+
+        //$companybranch = CompanyBranch::find($id); //tak lepas maybe letak dalam controller lain.
+
+        //$company = Company::with('companybranches')->where('company_id', $id)->first();
+            //foreach ($company->companybranches as $companybranch);
+
+        //$company = Company::with('companybranches')->with(where('company_id', $id)->first();
         //DD($company);   
 
-        //  $companycontacts = $company->companycontacts;  
-
-        //$companycontacts = Company::find($id)->companycontacts;
-
-        //$company->companycontacts();
-
-        //$companycontacts = $company->companycontacts;
-
-        //$company = Company::with('companycontact')->where('company_id', $id);
-            //foreach ($companycontacts as $companycontact);
-            //dd($company);
-            
-        //$company = CompanyContact::with(company);
-            //$company = Company::with('companycontact')->get();
-
-        //$company->companycontacts()->associate($companycontact);
+       
 
             //return $company->load('companycontacts'); // works for display..
 
-           // return view('company/edit_company')->with('company', $company)->with('companycontacts');//, $companycontact);
+           return view('company/edit_company')->with('company', $company)->with('companycontacts');//->with('companybranches', $companybranch);//, $companycontact);
 
-            return view('company/edit_company', compact('company'));
+            //return view('company/edit_company', compact('company'));
     }
 
     /**
@@ -203,7 +191,39 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $company = Company::find($id);
+
+        $company = Company::with('companycontacts')->where('company_id', $id)->first();
+        
+        $company->company_name = $request->input('company_name');
+        // company logo/image
+        if ($request->hasFile('company_image')) {
+            $image = $request->file('company_image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/' . $filename);
+            Image::make($image)->resize(800, 400)->save($location);
+            //delete old filename
+            $oldFilename = $company->company_image;
+
+
+            $company->company_image = $filename;
+
+            Storage::delete($oldFilename);
+        }
+
+         
+        $company->company_description = $request->input('company_description');
+        
+        $company->companycontacts->company_address = $request->input('company_address');        
+        $company->companycontacts->company_lat = $request->input('lat');
+        $company->companycontacts->company_lng = $request->input('lng');
+        $company->companycontacts->company_phone = $request->input('company_phone');
+        $company->companycontacts->company_fax = $request->input('company_fax');
+        $company->companycontacts->company_email = $request->input('company_email');
+        $company->companycontacts->company_website = $request->input('company_website');
+
+        $company->save();
+        $company->companycontacts->save();
     }
 
     /**

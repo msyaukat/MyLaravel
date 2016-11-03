@@ -24,6 +24,8 @@ Route::resource('profile', 'ProfileController');
 
 Route::resource('company', 'CompanyController');
 
+Route::resource('companybranch', 'CompanyBranchController');
+
 Route::resource('CompanyList', 'ListCompanyController');
 
 
