@@ -24,7 +24,13 @@ Route::resource('profile', 'ProfileController');
 
 Route::resource('company', 'CompanyController');
 
+// --Comments--
 Route::resource('companybranch', 'CompanyBranchController');
+//Route::post('companybranch/{company_id}', ['uses' => 'CompanyBranchController@store', 'as' => 'companybranch.store']);
+
+//Route::get('companybranch/{company_id}', ['uses' => 'CompanyBranchController@store', 'as' => 'companybranch.create']);
+
+
 
 Route::resource('CompanyList', 'ListCompanyController');
 

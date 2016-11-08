@@ -48,8 +48,9 @@ class CompanyBranchController extends Controller
 
         $companybranch = new CompanyBranch;
         $companybranch->company_branch_name = $request->company_branch_name;
+        $companybranch->company()->associate($company);
 
-        $company->companybranches()->save($companybranch);
+//$company->save();
     }
 
     /**
