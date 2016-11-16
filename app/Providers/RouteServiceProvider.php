@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -28,8 +29,10 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot($router);
 
-        $router->model('company_id', 'App\Company');
-
+        //binding company_id to company_branch_id
+        \Route::bind('company_id', function($company_id){
+            return \App\Company::where('company_id', $company_id)->firstOrFail();
+        });
     }
 
     /**

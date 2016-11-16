@@ -24,11 +24,14 @@ Route::resource('profile', 'ProfileController');
 
 Route::resource('company', 'CompanyController');
 
-// --Comments--
-Route::resource('companybranch', 'CompanyBranchController');
-//Route::post('companybranch/{company_id}', ['uses' => 'CompanyBranchController@store', 'as' => 'companybranch.store']);
+// --Branches--
+//Route::resource('companybranch', 'CompanyBranchController');
+Route::post('companybranch/{company_id}', ['uses' => 'CompanyBranchController@store', 'as' => 'companybranch.store']);
 
-//Route::get('companybranch/{company_id}', ['uses' => 'CompanyBranchController@store', 'as' => 'companybranch.create']);
+Route::get('companybranch/create', ['uses' => 'CompanyBranchController@create', 'as' => 'companybranch.create']);
+
+//Comments
+Route::post('comments/{company_id}',  ['uses' => 'CommentsController@store', 'as' => 'comments.store']);
 
 
 
@@ -41,3 +44,9 @@ Route::get('test', function(){
 });
 
 Route::get('api/category-dropdown/{id}', 'ApiController@categoryDropDownData')->where('id', '[0-9]+');
+
+//testing
+Route::get('testing/{company_id}', function (App\Company $company_id){
+	return $company_id->company_name;
+});
+

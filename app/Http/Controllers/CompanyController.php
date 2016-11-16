@@ -22,6 +22,8 @@ use Image;
 
 use Storage;
 
+use Auth;
+
 class CompanyController extends Controller
 {
 
@@ -75,7 +77,6 @@ class CompanyController extends Controller
                 'company_name' => 'required|max:255',
                 'category' => 'required|max:255',
                 'company_description'  => 'required',
-                'user_id' => 'required',
                 'main_cat_id' => 'required'|'integer',
 
             ));  
@@ -83,7 +84,7 @@ class CompanyController extends Controller
         $company = new Company;
         $company->company_name = $request->company_name;
         $company->company_description = $request->company_description;
-        $company->user_id = $request->user_id;
+        $company->user_id = Auth::user()->id;
 
 
 
@@ -98,7 +99,6 @@ class CompanyController extends Controller
         }
 
         $company->save(); 
-        
         $main_cat_id= $company->company_id;
 
         //kena attach
@@ -146,7 +146,7 @@ class CompanyController extends Controller
         $company = Company::with('companycontacts')->where('company_id', $id)->first();
 
 
-        return view('company/profile_company')->with('company', $company)->with('companycontacts');
+        return view('company/profile_company')->with('company', $company)->with('companycontacts')->with('slug');
     }
 
     /**

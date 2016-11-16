@@ -6,16 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Comment;
+
 use App\Company;
 
-use App\CompanyBranch;
-
-class CompanyBranchController extends Controller
+class CommentsController extends Controller
 {
-
-   public function __construct() {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -33,8 +29,7 @@ class CompanyBranchController extends Controller
      */
     public function create()
     {
-
-        return view('companybranch/create_companybranch');
+        //
     }
 
     /**
@@ -47,13 +42,12 @@ class CompanyBranchController extends Controller
     {
         $company = Company::find($company_id);
 
-        $companybranch = new CompanyBranch;
-        $companybranch->company_branch_name = $request->company_branch_name;
-        $companybranch->company()->associate($company);
-        DD($companybranch);
+        $comment = new Comment();
+        $comment->comment = $request->comment;
+        $comment->user_id = Auth::user()->id;
+        $comment->associate($company);
 
-$companybranch->save();
-
+        $comment->save();
     }
 
     /**

@@ -11,7 +11,7 @@ class Company extends Model
 
         public function users()
         {
-        	return $this->belongsTo('App\User', 'id', 'user_id');
+        	return $this->belongsToMany('App\User', 'id', 'user_id');
         }
 
         public function categories()
@@ -29,5 +29,9 @@ class Company extends Model
                 return $this->hasMany('App\CompanyBranch', 'company_branch_id', 'company_id');
         }
 
+        public function comments()
+        {
+                return $this->hasMany('App\Comment', 'comment_id', 'company_id');
+        }
 
 }

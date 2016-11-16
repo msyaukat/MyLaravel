@@ -28,6 +28,6 @@ class User extends Authenticatable
     public function Company()
     {
 
-        return $this->hasOne('App\Company', 'user_id', 'id');
+        return $this->hasMany('App\Company', 'user_id', 'id');
     }
 }

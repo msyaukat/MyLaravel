@@ -30,7 +30,6 @@ use App\SubCategory;
                 {!! Form::open(array('route' => 'company.store', 'files' => true)) !!}
 
                 	
-                    {!! Form::hidden('user_id', Auth::user()->id, ["class" => 'form-control input-lg']) !!}
 
                     
                 	{{ Form::label('company_name', 'Name of Your Business:') }}
@@ -114,6 +113,12 @@ use App\SubCategory;
                     {{ Form::submit('Create Business', ['class' => 'btn btn-success btn-block']) }}
                 
                     {!! Form::close() !!} 
+
+
+                    <br>
+
+                    
+                                
 
 
 
