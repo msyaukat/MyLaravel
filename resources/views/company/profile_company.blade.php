@@ -21,6 +21,7 @@
 <img src="{{ asset('images/' . $company->company_image) }}" alt="HTML5 Icon" style="width:128px;height:128px;">
 <h5> {{ $company->company_description }} </h5>
 
+
 <h3> Company Address </h3>
 <h5> {{ $company->companycontacts->company_address }} </h5>
 
@@ -47,11 +48,13 @@
 
     <div class="row">
         <div id="comment-form">
-          {{ Form::open(['route' => 'comments.store', $company->company_id, 'method' => 'POST']) }}
+          {{ Form::open(['url' => 'comments/{company_id}', 'method' => 'POST']) }}
             <div class="row">
               <div class="col-md-12">
                 {{ Form::label('comment', "Comment:") }}
+
                 {{ Form::textarea('comment', null, ['class' => 'form-control']) }}
+
 
                 {{ Form::submit('Add Comment', ['class' => 'btn btn-success btn-block', 'style' => 'margin-top:15px;'])}}
           {{ Form::close() }}

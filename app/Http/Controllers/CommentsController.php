@@ -10,6 +10,8 @@ use App\Comment;
 
 use App\Company;
 
+use Auth;
+
 class CommentsController extends Controller
 {
     /**
@@ -40,14 +42,21 @@ class CommentsController extends Controller
      */
     public function store(Request $request, $company_id)
     {
+
         $company = Company::find($company_id);
+        
 
         $comment = new Comment();
         $comment->comment = $request->comment;
         $comment->user_id = Auth::user()->id;
-        $comment->associate($company);
+        //$comment->company_id = Company::find($company_id);
+        //$comment->companies()->associate($company);
+        //$comment->company_id = $company->company_id;
 
-        $comment->save();
+        //guna hidden form, mesti baiki utk guna relation save
+       // $comment->company_id = $request->company_id;
+        $company->comments()->save($comment);
+        //$comment->save();
     }
 
     /**

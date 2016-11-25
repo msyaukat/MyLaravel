@@ -29,10 +29,7 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot($router);
 
-        //binding company_id to company_branch_id
-        \Route::bind('company_id', function($company_id){
-            return \App\Company::where('company_id', $company_id)->firstOrFail();
-        });
+        
     }
 
     /**

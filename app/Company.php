@@ -9,6 +9,11 @@ class Company extends Model
         protected $table = 'companies';
         protected $primaryKey = 'company_id';
 
+         public function getRouteKeyName()
+        {
+                return 'company_id';
+        }
+
         public function users()
         {
         	return $this->belongsToMany('App\User', 'id', 'user_id');
@@ -31,7 +36,7 @@ class Company extends Model
 
         public function comments()
         {
-                return $this->hasMany('App\Comment', 'comment_id', 'company_id');
+                return $this->hasMany('App\Comment', 'company_id', 'comment_id');
         }
 
 }

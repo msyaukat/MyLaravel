@@ -9,9 +9,12 @@ class Comment extends Model
     protected $table = 'comments';
     protected $primaryKey = 'comment_id';
 
-    public function companies()
+
+   
+
+    public function company()
     {
-    	return $this->belongsTo('App\Company', 'company_id', 'comment_id');
+    	return $this->belongsTo('App\Company', 'company_id');
     }
 
 }
